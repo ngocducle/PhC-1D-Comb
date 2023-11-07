@@ -1,0 +1,74 @@
+################################################################################################################################################ 
+#
+# Installation guide on Ubuntu 
+#
+# 
+# This command installs lapack, blas, lapack-dev and blas-dev 
+sudo apt install liblapack-dev 
+
+sudo apt install liblua5.2-dev
+
+sudo apt install python3-dev
+
+sudo apt install libfftw3-dev
+
+git clone https://github.com/xianyi/OpenBLAS.git
+
+sudo apt-get install libsuitesparse-dev
+
+git clone https://github.com/phoebe-p/S4
+
+cd S4
+make boost
+
+make S4_pyext
+
+python S4_func.py
+
+python band_dispersion.py
+
+##############################################################################################################################################
+#         Installation of S4_pyext in Red Hat systems (tested in Fedora 38)
+#
+#
+# The packages liblua-devel, fftw3-devel and suitesparse-devel are indispensible for the installation of S4_pyext
+# Although we are using the Python interface, we still need to install liblua-devel
+# For ancient versions of Fedora and CentOS (CentOS <= 7), we should use yum instead of dnf 
+
+# Enter the super user mode (type the password). You can use sudo instead in case where you do not activate the root account 
+su 
+
+# Install lapack and blas if you do not have these packages in your computer. Note that blas and blas-devel are dependencies of lapack and lapack-devel so they are installed when we install the latter ones 
+dnf install lapack 
+dnf install lapack-devel 
+
+# Install numpy, scipy, matplotlib if you do not have these Python packages in your computer 
+dnf install python-numpy python-scipy python-matplotlib 
+
+# Install liblua-devel, current version (19/9/2023): lua-devel-5.4
+dnf install lua-devel 
+
+# Install fftw3-devel, current version (19/9/2023): fftw3-devel-3.3
+dnf install fftw3-devel
+
+# Install suitesparse-devel, current version (19/9/2023): suitesparse-devel-4.0.2
+dnf install suitesparse-devel
+
+# You may need to install OPENBLAS, LAPACK if you don't have these libraries in your computer
+
+# Once you install all the required packages, exit the superuser (root) mode. Otherwise, you take the risk of being unable to use and modify the S4 folder
+exit 
+
+# Clone the S4_pyext package from the Phoebe repository 
+git clone https://github.com/phoebe-p/S4
+
+# Enter to the S4 directory
+cd S4
+
+# Make 
+make boost           # make boost is essential . At this step, do not make lib as in the documentation of Victor Liu 
+make S4_pyext  
+
+# We successfully install S4_pyext, now we can import S4 as a library to Python
+# by using the following command at the beginning of the program 
+import S4 as S4 
